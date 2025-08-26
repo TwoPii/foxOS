@@ -1,6 +1,8 @@
 import { useEffect, useState, type JSX } from "react";
 import Window from "../window/Window";
 import Editor from "../editor/Editor";
+import LaunchBar from "../launch-bar/LaunchBar";
+import styles from "./Programs.module.scss";
 
 export type Program = {
   pid: number;
@@ -50,17 +52,20 @@ const Programs = () => {
 
   return (
     <>
-      {programs.map((program) => {
-        if (program.isOpen && !program.isMinimized)
-          return (
-            <Window
-              key={"window_" + program.pid}
-              program={program}
-              onClose={() => onClose(program)}
-              onMinimize={() => onMinimize(program)}
-            ></Window>
-          );
-      })}
+      <div className={styles.mainSpace}>
+        {programs.map((program) => {
+          if (program.isOpen && !program.isMinimized)
+            return (
+              <Window
+                key={"window_" + program.pid}
+                program={program}
+                onClose={() => onClose(program)}
+                onMinimize={() => onMinimize(program)}
+              ></Window>
+            );
+        })}
+      </div>
+      <LaunchBar programs={programs} />
     </>
   );
 };

@@ -1,7 +1,10 @@
 .container {
-  background-color: #d3dad9;
+  background-color: #715a5a;
   width: 100vw;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
   font-family: "Roboto", sans-serif;
   font-optical-sizing: auto;
