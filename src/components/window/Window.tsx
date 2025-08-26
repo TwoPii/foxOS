@@ -1,8 +1,8 @@
 import ResizableCard from "../resizable-card/ResizableCard";
 import WindowTopBar from "./WindowTopBar";
-import type { Program } from "../programs/Programs";
 import { useCallback, useRef, useState } from "react";
 import { getNextZ } from "./zIndexManager";
+import type { Program } from "../programs/Program";
 
 type IWindowProps = {
   program: Program;

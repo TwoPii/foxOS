@@ -1,5 +1,5 @@
 import interact from "interactjs";
-import React, { forwardRef, useEffect, type Ref } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 
 export interface ResizableCardProps {
   children?: React.ReactNode;
@@ -24,10 +24,11 @@ const ResizableCard = forwardRef<HTMLDivElement, ResizableCardProps>(
     },
     ref
   ) => {
+    const localRef = useRef<HTMLDivElement>(null);
+    React.useImperativeHandle(ref, () => localRef.current!);
+
     const enable = () => {
-      interact(
-        (ref as Ref<HTMLDivElement>)!.current as unknown as HTMLDivElement
-      ).resizable({
+      interact(localRef.current as unknown as HTMLDivElement).resizable({
         edges: {
           left: true,
           right: true,
@@ -75,7 +76,7 @@ const ResizableCard = forwardRef<HTMLDivElement, ResizableCardProps>(
 
     return (
       <div
-        ref={ref}
+        ref={localRef}
         className={`draggable-card ${className}`}
         style={{
           position: "absolute",
