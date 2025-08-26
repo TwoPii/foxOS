@@ -1,9 +1,36 @@
 .launchIcon {
-  background-color: #d3dad9;
-  height: 65px;
-  width: 65px;
-  border-radius: 15px;
+  background-color: #37353e;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.icon {
+  height: 65px;
+  width: 65px;
+  border-radius: 20px;
+}
+
+.toast {
+  position: absolute;
+  top: -70px;
+  background-color: #44444e;
+  color: #d3dad9;
+  padding: 10px 5px;
+  border-radius: 10px;
+  display: none;
+}
+
+.launchIcon:hover {
+  .toast {
+    display: block;
+  }
+}
+
+.minimized {
+  position: absolute;
+  color: #d3dad9;
+  top: 25px;
+  font-size: 48px;
 }

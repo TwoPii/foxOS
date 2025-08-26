@@ -1,19 +1,13 @@
-import { useEffect, useState, type JSX } from "react";
+import { useEffect, useState } from "react";
 import Window from "../window/Window";
 import Editor from "../editor/Editor";
 import LaunchBar from "../launch-bar/LaunchBar";
 import styles from "./Programs.module.scss";
+import type { Program } from "./Program";
+import PenIcon from "../../assets/icons/pen.svg?react";
+import PCIcon from "../../assets/icons/pc.svg?react";
 
-export type Program = {
-  pid: number;
-  isOpen: boolean;
-  isMinimized: boolean;
-  appId: number;
-  loader: JSX.Element;
-  title: string;
-};
-
-const initialPrograms = [
+const initialPrograms: Program[] = [
   {
     pid: 1,
     isOpen: true,
@@ -21,14 +15,16 @@ const initialPrograms = [
     appId: 1,
     loader: <Editor />,
     title: "Editor",
+    icon: PenIcon,
   },
   {
     pid: 2,
     isOpen: true,
     isMinimized: false,
     appId: 2,
-    loader: <p>Test</p>,
-    title: "Test App",
+    loader: <p>-</p>,
+    title: "My PC",
+    icon: PCIcon,
   },
 ];
 
@@ -50,6 +46,15 @@ const Programs = () => {
     ]);
   };
 
+  const onClick = (program: Program) => {
+    if (program.isMinimized) program.isMinimized = false;
+    else if (!program.isOpen) program.isOpen = true;
+    setPrograms([
+      ...programs.filter((p) => p.pid != program.pid),
+      { ...program },
+    ]);
+  };
+
   return (
     <>
       <div className={styles.mainSpace}>
@@ -65,7 +70,7 @@ const Programs = () => {
             );
         })}
       </div>
-      <LaunchBar programs={programs} />
+      <LaunchBar programs={programs} onClick={onClick} />
     </>
   );
 };
