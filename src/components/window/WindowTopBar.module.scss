@@ -1,0 +1,50 @@
+.topBar {
+  display: flex;
+  flex-direction: row;
+  margin: 4px 4px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  text-align: center;
+  margin-left: 5px;
+}
+
+.button {
+  height: 12px;
+  width: 12px;
+  border-radius: 50px;
+  margin: 4px;
+}
+
+.right {
+  flex: 1;
+}
+
+.close {
+  background-color: #ff605c;
+  color: #ff605c;
+}
+
+.minimize {
+  background-color: #ffbd44;
+  color: #ffbd44;
+}
+
+.expand {
+  background-color: #00ca4e;
+  color: #00ca4e;
+}
+
+.close:hover,
+.minimize:hover,
+.espand:hover {
+  color: #37353e;
+}
+
+.title {
+  flex: 1;
+  text-align: center;
+}
