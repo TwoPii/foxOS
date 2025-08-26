@@ -7,9 +7,10 @@ import { getNextZ } from "./zIndexManager";
 type IWindowProps = {
   program: Program;
   onClose: () => void;
+  onMinimize: () => void;
 };
 
-const Window = ({ program, onClose }: IWindowProps) => {
+const Window = ({ program, onClose, onMinimize }: IWindowProps) => {
   const windowTarget = useRef(null);
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 20 + program.pid * 35,
@@ -17,7 +18,18 @@ const Window = ({ program, onClose }: IWindowProps) => {
   });
 
   const isDragging = useRef<boolean>(false);
+  const [expanded, setExpanded] = useState(false);
   const [z, setZ] = useState(1);
+
+  const size = useRef<{ width: number; height: number }>({
+    width: 0,
+    height: 0,
+  });
+
+  const prevPosition = useRef<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
 
   const startDragPosition = useRef<{
     x: number;
@@ -25,6 +37,33 @@ const Window = ({ program, onClose }: IWindowProps) => {
   }>({ x: 0, y: 0 });
 
   const window = document.getElementById("root")!;
+
+  const onExpand = useCallback(() => {
+    const target = windowTarget.current as unknown as HTMLElement;
+
+    const parent = target.parentElement;
+    if (!parent) return;
+    const parentRect = parent.getBoundingClientRect();
+    const selfRect = target.getBoundingClientRect();
+
+    if (!expanded) {
+      // Save current position and size
+      prevPosition.current = { x: position.x, y: position.y };
+      size.current = { width: selfRect.width, height: selfRect.height };
+
+      // Expand to parent
+      setPosition({ x: 0, y: 0 });
+      target.style.width = `${parentRect.width}px`;
+      target.style.height = `${parentRect.height}px`;
+      setExpanded(true);
+    } else {
+      // Restore previous position and size
+      setPosition({ x: prevPosition.current.x, y: prevPosition.current.y });
+      target.style.width = `${size.current.width}px`;
+      target.style.height = `${size.current.height}px`;
+      setExpanded(false);
+    }
+  }, [expanded, position]);
 
   const onMouseUp = useCallback(() => {
     window.removeEventListener("mousemove", onMouseMove);
@@ -97,6 +136,8 @@ const Window = ({ program, onClose }: IWindowProps) => {
         title={program.title}
         onClose={onClose}
         onMouseDown={onMouseDown}
+        onExpand={onExpand}
+        onMinimize={onMinimize}
       />
       <div
         style={{

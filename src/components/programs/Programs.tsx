@@ -41,6 +41,13 @@ const Programs = () => {
     ]);
   };
 
+  const onMinimize = (program: Program) => {
+    setPrograms([
+      ...programs.filter((p) => p.pid != program.pid),
+      { ...program, isMinimized: true },
+    ]);
+  };
+
   return (
     <>
       {programs.map((program) => {
@@ -50,6 +57,7 @@ const Programs = () => {
               key={"window_" + program.pid}
               program={program}
               onClose={() => onClose(program)}
+              onMinimize={() => onMinimize(program)}
             ></Window>
           );
       })}
