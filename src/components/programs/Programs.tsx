@@ -29,18 +29,21 @@ const initialPrograms: Program[] = [
 ];
 
 const Programs = () => {
+  const setOrderedPrograms = (programs: Program[]) =>
+    setPrograms(programs.sort((a, b) => a.appId - b.appId));
+
   const [programs, setPrograms] = useState<Program[]>([]);
   useEffect(() => setPrograms(initialPrograms), []);
 
   const onClose = (program: Program) => {
-    setPrograms([
+    setOrderedPrograms([
       ...programs.filter((p) => p.pid != program.pid),
       { ...program, isOpen: false },
     ]);
   };
 
   const onMinimize = (program: Program) => {
-    setPrograms([
+    setOrderedPrograms([
       ...programs.filter((p) => p.pid != program.pid),
       { ...program, isMinimized: true },
     ]);
@@ -49,7 +52,7 @@ const Programs = () => {
   const onClick = (program: Program) => {
     if (program.isMinimized) program.isMinimized = false;
     else if (!program.isOpen) program.isOpen = true;
-    setPrograms([
+    setOrderedPrograms([
       ...programs.filter((p) => p.pid != program.pid),
       { ...program },
     ]);
@@ -59,13 +62,14 @@ const Programs = () => {
     <>
       <div className={styles.mainSpace}>
         {programs.map((program) => {
-          if (program.isOpen && !program.isMinimized)
+          if (program.isOpen)
             return (
               <Window
                 key={"window_" + program.pid}
                 program={program}
                 onClose={() => onClose(program)}
                 onMinimize={() => onMinimize(program)}
+                isMinimized={program.isMinimized}
               ></Window>
             );
         })}

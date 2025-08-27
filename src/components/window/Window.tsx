@@ -8,9 +8,16 @@ type IWindowProps = {
   program: Program;
   onClose: () => void;
   onMinimize: () => void;
+  isMinimized: boolean;
 };
 
-const Window = ({ program, onClose, onMinimize }: IWindowProps) => {
+const Window = ({
+  program,
+  onClose,
+  onMinimize,
+  isMinimized,
+}: IWindowProps) => {
+  console.log(program.title, isMinimized);
   const windowTarget = useRef(null);
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 20 + program.pid * 35,
@@ -35,7 +42,6 @@ const Window = ({ program, onClose, onMinimize }: IWindowProps) => {
     x: number;
     y: number;
   }>({ x: 0, y: 0 });
-
   const window = document.getElementById("root")!;
 
   const onExpand = useCallback(() => {
@@ -127,7 +133,7 @@ const Window = ({ program, onClose, onMinimize }: IWindowProps) => {
         background: "#37353E",
         boxShadow: "0 6px 18px hsla(0, 0%, 0%, 0.12)",
         color: "#D3DAD9",
-        display: "flex",
+        display: isMinimized ? "none" : "flex",
         flexDirection: "column",
         zIndex: z,
       }}
