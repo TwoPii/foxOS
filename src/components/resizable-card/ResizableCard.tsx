@@ -1,5 +1,7 @@
 import interact from "interactjs";
 import React, { forwardRef, useEffect, useRef } from "react";
+import styles from "./ResizableCard.module.scss";
+import classNames from "../utils/classNames.utils";
 
 export interface ResizableCardProps {
   children?: React.ReactNode;
@@ -20,7 +22,6 @@ const ResizableCard = forwardRef<HTMLDivElement, ResizableCardProps>(
       className = "",
       minWidth = 80,
       minHeight = 60,
-      edgesColor = "white",
     },
     ref
   ) => {
@@ -90,13 +91,11 @@ const ResizableCard = forwardRef<HTMLDivElement, ResizableCardProps>(
         }}
       >
         <div
-          className="top-selector selector"
-          style={{
-            flexGrow: 1,
-            maxHeight: "2px",
-            backgroundColor: edgesColor,
-            margin: "0px 5px",
-          }}
+          className={classNames(
+            "top-selector",
+            styles.selector,
+            styles.horizontal
+          )}
         ></div>
         <div
           style={{
@@ -106,13 +105,11 @@ const ResizableCard = forwardRef<HTMLDivElement, ResizableCardProps>(
           }}
         >
           <div
-            className="left-selector selector"
-            style={{
-              flexGrow: 1,
-              maxWidth: "2px",
-              backgroundColor: edgesColor,
-              margin: "5px 0px",
-            }}
+            className={classNames(
+              "left-selector",
+              styles.selector,
+              styles.vertical
+            )}
           ></div>
           <div
             style={{
@@ -124,23 +121,19 @@ const ResizableCard = forwardRef<HTMLDivElement, ResizableCardProps>(
             {children}
           </div>
           <div
-            className="right-selector selector"
-            style={{
-              flexGrow: 1,
-              maxWidth: "2px",
-              backgroundColor: edgesColor,
-              margin: "50px 0px",
-            }}
+            className={classNames(
+              "right-selector",
+              styles.selector,
+              styles.vertical
+            )}
           ></div>
         </div>
         <div
-          className="bottom-selector selector"
-          style={{
-            flexGrow: 1,
-            maxHeight: "2px",
-            backgroundColor: edgesColor,
-            margin: "0px 50px",
-          }}
+          className={classNames(
+            "bottom-selector",
+            styles.selector,
+            styles.horizontal
+          )}
         ></div>
       </div>
     );
