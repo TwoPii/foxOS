@@ -10,7 +10,9 @@ const LaunchIcon = ({ program, onClick }: ILaunchIconProps) => {
     <div className={styles.launchIcon} onClick={onClick}>
       {<program.icon className={styles.icon} />}
       {(program.isMinimized || program.isOpen) && (
-        <div className={styles.minimized}>.</div>
+        <div className={styles.minimized}>
+          <div className={styles.minimizedIcon} />
+        </div>
       )}
       <div className={styles.toast}>{program.title}</div>
     </div>

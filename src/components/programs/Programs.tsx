@@ -6,6 +6,7 @@ import styles from "./Programs.module.scss";
 import type { Program } from "./Program";
 import PenIcon from "../../assets/icons/pen.svg?react";
 import PCIcon from "../../assets/icons/pc.svg?react";
+import System from "../system/System";
 
 const initialPrograms: Program[] = [
   {
@@ -22,8 +23,8 @@ const initialPrograms: Program[] = [
     isOpen: true,
     isMinimized: false,
     appId: 2,
-    loader: <p>-</p>,
-    title: "My PC",
+    loader: <System />,
+    title: "System",
     icon: PCIcon,
   },
 ];
